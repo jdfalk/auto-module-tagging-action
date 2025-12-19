@@ -3,7 +3,9 @@
 # guid: 8c3e5f9a-7d4b-6e2a-1f8d-4c9e3a2b5d7f
 
 name: "Auto Module Tagging"
-description: "Automatically tag Go modules based on commit messages and module paths"
+description: >-
+  Automatically tag Go modules based on commit messages
+  and module paths
 author: "jdfalk"
 
 branding:
@@ -64,7 +66,9 @@ runs:
       if: inputs.detect-modules == 'true'
       run: |
         # Find all go.mod files
-        MODULES=$(find . -name "go.mod" -not -path "*/vendor/*" -not -path "*/node_modules/*")
+        MODULES=$(find . -name "go.mod" \
+          -not -path "*/vendor/*" \
+          -not -path "*/node_modules/*")
 
         # Get changed files in this commit
         CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
@@ -104,9 +108,12 @@ runs:
         for module in "${MODULE_ARRAY[@]}"; do
           # Get latest tag for this module
           if [ "$module" == "." ]; then
-            LATEST_TAG=$(git describe --tags --abbrev=0 --match "v*" 2>/dev/null || echo "v0.0.0")
+            LATEST_TAG=$(git describe --tags --abbrev=0 \
+              --match "v*" 2>/dev/null || echo "v0.0.0")
           else
-            LATEST_TAG=$(git describe --tags --abbrev=0 --match "${module}/v*" 2>/dev/null || echo "${module}/v0.0.0")
+            LATEST_TAG=$(git describe --tags --abbrev=0 \
+              --match "${module}/v*" 2>/dev/null || \
+              echo "${module}/v0.0.0")
           fi
           echo "Module $module latest tag: $LATEST_TAG"
         done
@@ -138,10 +145,13 @@ runs:
         for module in "${MODULE_ARRAY[@]}"; do
           # Get current version
           if [ "$module" == "." ]; then
-            CURRENT_TAG=$(git describe --tags --abbrev=0 --match "v*" 2>/dev/null || echo "v0.0.0")
+            CURRENT_TAG=$(git describe --tags --abbrev=0 \
+              --match "v*" 2>/dev/null || echo "v0.0.0")
             TAG_PREFIX=""
           else
-            CURRENT_TAG=$(git describe --tags --abbrev=0 --match "${module}/v*" 2>/dev/null || echo "${module}/v0.0.0")
+            CURRENT_TAG=$(git describe --tags --abbrev=0 \
+              --match "${module}/v*" 2>/dev/null || \
+              echo "${module}/v0.0.0")
             TAG_PREFIX="${module}/"
           fi
 
@@ -179,7 +189,8 @@ runs:
             echo "Dry run: Would create tag $NEW_TAG"
           fi
 
-          TAGS_CREATED=$(echo "$TAGS_CREATED" | jq -c --arg tag "$NEW_TAG" '. + [$tag]')
+          TAGS_CREATED=$(echo "$TAGS_CREATED" | \
+            jq -c --arg tag "$NEW_TAG" '. + [$tag]')
           COUNT=$((COUNT + 1))
         done
 
@@ -189,12 +200,17 @@ runs:
 
     - name: Output summary
       run: |
-        echo "## Auto Module Tagging Summary" >> $GITHUB_STEP_SUMMARY
+        echo "## Auto Module Tagging Summary" >> \
+          $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Modules Updated:** ${{ steps.tag.outputs.count }}" >> $GITHUB_STEP_SUMMARY
-        echo "**Version Increment:** ${{ inputs.version-increment }}" >> $GITHUB_STEP_SUMMARY
-        echo "**Tags Created:** ${{ steps.tag.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Modules Updated:** \
+          ${{ steps.tag.outputs.count }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Version Increment:** \
+          ${{ inputs.version-increment }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Tags Created:** \
+          ${{ steps.tag.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
         if [ "${{ inputs.dry-run }}" == "true" ]; then
-          echo "**Status:** Dry run (no tags created)" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** Dry run (no tags created)" >> \
+            $GITHUB_STEP_SUMMARY
         fi
       shell: bash
