@@ -72,9 +72,11 @@ jobs:
       - name: Test action execution
         uses: ./
         with:
-          modules-dir: "./test-repo/modules"
-          tag-prefix: "modules"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          detect-modules: "true"
+          version-increment: "patch"
           dry-run: "true"
+          create-release: "false"
 
   lint:
     name: Lint
