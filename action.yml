@@ -1,7 +1,7 @@
 # file: action.yml
-# version: 1.0.0
+# version: 1.1.0
 # guid: 8c3e5f9a-7d4b-6e2a-1f8d-4c9e3a2b5d7f
-
+---
 name: "Auto Module Tagging"
 description: >-
   Automatically tag Go modules based on commit messages
