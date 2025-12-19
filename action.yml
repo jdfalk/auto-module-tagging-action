@@ -62,7 +62,6 @@ runs:
     - name: Detect changed modules
       id: detect
       if: inputs.detect-modules == 'true'
-      shell: bash
       run: |
         # Find all go.mod files
         MODULES=$(find . -name "go.mod" -not -path "*/vendor/*" -not -path "*/node_modules/*")
@@ -85,10 +84,10 @@ runs:
 
         echo "modules=$CHANGED_MODULES" >> $GITHUB_OUTPUT
         echo "Detected changed modules: $CHANGED_MODULES"
+      shell: bash
 
     - name: Get latest tags for modules
       id: latest-tags
-      shell: bash
       run: |
         MODULES="${{ inputs.module-paths }}"
         if [ -z "$MODULES" ]; then
@@ -111,10 +110,10 @@ runs:
           fi
           echo "Module $module latest tag: $LATEST_TAG"
         done
+      shell: bash
 
     - name: Create tags
       id: tag
-      shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
@@ -186,9 +185,9 @@ runs:
 
         echo "tags=$TAGS_CREATED" >> $GITHUB_OUTPUT
         echo "count=$COUNT" >> $GITHUB_OUTPUT
+      shell: bash
 
     - name: Output summary
-      shell: bash
       run: |
         echo "## Auto Module Tagging Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
@@ -198,3 +197,4 @@ runs:
         if [ "${{ inputs.dry-run }}" == "true" ]; then
           echo "**Status:** Dry run (no tags created)" >> $GITHUB_STEP_SUMMARY
         fi
+      shell: bash
