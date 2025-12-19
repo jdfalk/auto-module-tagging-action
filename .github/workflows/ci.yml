@@ -1,0 +1,89 @@
+# file: .github/workflows/ci.yml
+# version: 1.0.0
+# guid: c5d6e7f8-a9b0-1234-c890-345678901234
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate action.yml
+        run: |
+          if [ ! -f action.yml ]; then
+            echo "Error: action.yml not found"
+            exit 1
+          fi
+          echo "✅ action.yml validation passed"
+
+  test:
+    name: Test Action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create test monorepo structure
+        run: |
+          mkdir -p test-repo/modules/{module-a,module-b,module-c}
+
+          # Create module-a
+          cd test-repo/modules/module-a
+          cat > go.mod << 'EOF'
+          module github.com/test/repo/modules/module-a
+
+          go 1.23
+          EOF
+
+          cat > main.go << 'EOF'
+          package main
+
+          func main() {}
+          EOF
+
+          # Create module-b
+          cd ../module-b
+          cat > go.mod << 'EOF'
+          module github.com/test/repo/modules/module-b
+
+          go 1.23
+          EOF
+
+          cat > main.go << 'EOF'
+          package main
+
+          func main() {}
+          EOF
+
+      - name: Test action execution
+        uses: ./
+        with:
+          modules-dir: "./test-repo/modules"
+          tag-prefix: "modules"
+          dry-run: "true"
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run yamllint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: action.yml
