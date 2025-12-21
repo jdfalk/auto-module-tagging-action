@@ -7,7 +7,6 @@ description: >-
   Automatically tag Go modules based on commit messages
   and module paths
 author: "jdfalk"
-
 branding:
   icon: "tag"
   color: "blue"
