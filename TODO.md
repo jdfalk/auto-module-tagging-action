@@ -1,5 +1,5 @@
 <!-- file: TODO.md -->
-<!-- version: 1.0.0 -->
+<!-- version: 1.0.1 -->
 <!-- guid: 12345678-1234-1234-1234-123456789003 -->
 
 # TODO - auto-module-tagging-action
@@ -13,7 +13,7 @@ exceeding 80 character limit
 
 **Error Messages:**
 
-```
+```text
 action.yml:6:81: [error] line too long (85 > 80 characters) (line-length)
 action.yml:68:81: [error] line too long (94 > 80 characters) (line-length)
 action.yml:108:81: [error] line too long (98 > 80 characters) (line-length)
@@ -48,7 +48,7 @@ code 128
 
 **Error Message:**
 
-```
+```text
 ##[warning]Restore cache failed: Dependencies file is not found
 ##[error]Process completed with exit code 128
 ```
