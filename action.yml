@@ -2,63 +2,63 @@
 # version: 1.1.0
 # guid: 8c3e5f9a-7d4b-6e2a-1f8d-4c9e3a2b5d7f
 ---
-name: "Auto Module Tagging"
+name: 'Auto Module Tagging'
 description: >-
   Automatically tag Go modules based on commit messages
   and module paths
-author: "jdfalk"
+author: 'jdfalk'
 branding:
-  icon: "tag"
-  color: "blue"
+  icon: 'tag'
+  color: 'blue'
 
 inputs:
   github-token:
-    description: "GitHub token for creating tags"
+    description: 'GitHub token for creating tags'
     required: true
   detect-modules:
-    description: "Auto-detect changed Go modules"
+    description: 'Auto-detect changed Go modules'
     required: false
-    default: "true"
+    default: 'true'
   module-paths:
-    description: "Explicit module paths (comma-separated)"
+    description: 'Explicit module paths (comma-separated)'
     required: false
-    default: ""
+    default: ''
   version-increment:
-    description: "Version increment type (major, minor, patch)"
+    description: 'Version increment type (major, minor, patch)'
     required: false
-    default: "patch"
+    default: 'patch'
   dry-run:
-    description: "Perform dry run without creating tags"
+    description: 'Perform dry run without creating tags'
     required: false
-    default: "false"
+    default: 'false'
   tag-prefix:
-    description: "Prefix for module tags"
+    description: 'Prefix for module tags'
     required: false
-    default: ""
+    default: ''
   create-release:
-    description: "Create GitHub release for each tag"
+    description: 'Create GitHub release for each tag'
     required: false
-    default: "false"
+    default: 'false'
   commit-pattern:
-    description: "Regex pattern to match commit messages for versioning"
+    description: 'Regex pattern to match commit messages for versioning'
     required: false
-    default: ""
+    default: ''
 
 outputs:
   tags-created:
-    description: "JSON array of tags that were created"
+    description: 'JSON array of tags that were created'
     value: ${{ steps.tag.outputs.tags }}
   modules-updated:
-    description: "Number of modules updated"
+    description: 'Number of modules updated'
     value: ${{ steps.tag.outputs.count }}
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: "1.23"
+        go-version: '1.23'
 
     - name: Detect changed modules
       id: detect

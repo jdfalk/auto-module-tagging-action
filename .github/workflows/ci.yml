@@ -73,10 +73,10 @@ jobs:
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          detect-modules: "true"
-          version-increment: "patch"
-          dry-run: "true"
-          create-release: "false"
+          detect-modules: 'true'
+          version-increment: 'patch'
+          dry-run: 'true'
+          create-release: 'false'
 
   lint:
     name: Lint
