@@ -74,6 +74,18 @@ code 128
 
 ## Migration Tasks
 
+### #todo Dockerize action execution
+
+**Status:** In Progress **Priority:** High
+
+**Tasks:**
+
+- [x] Add docker execution path with `use-docker`/`docker-image` inputs
+- [x] Create Dockerfile with pinned base image and .dockerignore
+- [ ] Add GHCR publish workflow with digest pinning and version bump
+- [ ] Verify publish workflow completes and updates action.yml defaults
+- [ ] Tag and push release after successful publish
+
 ### #todo Migrate to Reusable Workflows
 
 **Status:** Pending **Priority:** Medium **Dependencies:** CI failures must be
