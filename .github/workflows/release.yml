@@ -99,10 +99,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git tag -fa ${{ steps.version.outputs.major }} -m "Update ${{ steps.version.outputs.major }} to ${{ steps.version.outputs.full }}"
+          # Point major tag to the full version tag, not to HEAD
+          git tag -fa ${{ steps.version.outputs.major }} ${{ steps.version.outputs.full }} -m "Update ${{ steps.version.outputs.major }} to ${{ steps.version.outputs.full }}"
           git push origin ${{ steps.version.outputs.major }} --force
 
       - name: Update minor version tag
         run: |
-          git tag -fa ${{ steps.version.outputs.minor }} -m "Update ${{ steps.version.outputs.minor }} to ${{ steps.version.outputs.full }}"
+          # Point minor tag to the full version tag, not to HEAD
+          git tag -fa ${{ steps.version.outputs.minor }} ${{ steps.version.outputs.full }} -m "Update ${{ steps.version.outputs.minor }} to ${{ steps.version.outputs.full }}"
           git push origin ${{ steps.version.outputs.minor }} --force
