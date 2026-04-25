@@ -2,8 +2,8 @@
 <!-- version: 1.2.1 -->
 <!-- guid: a7b8c9d0-e1f2-3456-7890-1a2b3c4d5e6f -->
 <!-- last-edited: 2026-01-19 -->
-<!-- DO NOT EDIT: This file is managed centrally in jft-github-actions template repository -->
-<!-- To update: Create an issue/PR in jdfalk/jft-github-actions -->
+<!-- DO NOT EDIT: This file is managed centrally in ghcommon repository -->
+<!-- To update: Create an issue/PR in jdfalk/ghcommon -->
 
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
