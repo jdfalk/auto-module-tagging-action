@@ -38,7 +38,7 @@ action.yml:197:81: [error] line too long (86 > 80 characters) (line-length)
 - `action.yml` - All identified long lines
 
 **Log File:**
-`/Users/jdfalk/repos/github.com/jdfalk/ghcommon/logs/ci-failures/auto-module-tagging-action_20251218_231445.log`
+`/Users/jdfalk/repos/github.com/falkcorp/github-common/logs/ci-failures/auto-module-tagging-action_20251218_231445.log`
 
 ---
 
