@@ -1,5 +1,5 @@
 # file: .github/workflows/ci.yml
-# version: 1.0.0
+# version: 1.1.0
 # guid: c5d6e7f8-a9b0-1234-c890-345678901234
 
 name: CI
@@ -85,7 +85,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
+      # yamllint is invoked directly rather than through a third-party action.
+      # This repo's Actions policy is allowed_actions=selected with
+      # github_owned_allowed=false, patterns_allowed=[jdfalk/*] and
+      # verified_allowed=true. The previous step referenced an UNVERIFIED
+      # publisher that does not match jdfalk/*, so GitHub refused to compile
+      # this workflow at all: every CI run concluded `startup_failure` with
+      # zero jobs, the required status checks never reported, and every PR sat
+      # blocked. Found 2026-08-21 by bisection; this job passes under the same
+      # policy once the blocked action reference is gone.
       - name: Run yamllint
-        uses: ibiqlik/action-yamllint@2576378a8e339169678f9939646ee3ee325e845c # v3.1.1
-        with:
-          file_or_dir: action.yml
+        run: |
+          pipx install yamllint
+          yamllint action.yml
